@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'java'
+    id 'application'
+    id 'idea'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Dependencies go here
+   	compile 'ch.qos.logback:logback-classic:1.2.3'
+  	compile 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+  	compile 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+  	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+  	compile 'org.codehaus.janino:janino:3.0.8'
+  	testCompile 'ch.qos.logback:logback-classic:1.2.3'
+  	testCompile 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+  	testCompile 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+  	testCompile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
+  	testCompile 'org.codehaus.janino:janino:3.0.8'
+    testCompile 'junit:junit:4.12'
+    implementation 'org.apache.commons:commons-lang3:3.6'
+}
+
+mainClassName = 'com.newrelic.codingchallenge.Main'
+
+shadowJar {
+    baseName = 'coding-challenge-shadow'
+    classifier = null
+    version = null
+    manifest {
+        attributes 'Description': 'New Relic coding challenge application JAR'
+    }
+}
+
+task copyConfig(type:Copy) {
+   from ( "application.properties" ) 
+   into ( "$buildDir/")
+}
+build.finalizedBy(copyConfig)
+

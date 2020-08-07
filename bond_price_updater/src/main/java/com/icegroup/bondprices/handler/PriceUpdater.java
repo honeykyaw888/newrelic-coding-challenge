@@ -39,7 +39,7 @@ public class PriceUpdater implements Runnable {
 		return readWriteFileAccess;
 	}
 
-	private void printLine(String message) {
+	protected void printLine(String message) {
 		if (isNumeric(message)) { // we have a price
 			if (lastBondName != null)
 				priceData.put(lastBondName, message);
